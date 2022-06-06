@@ -1,5 +1,5 @@
-class EBookModel {
-  EBookModel({
+class SearchEbookModel {
+  SearchEbookModel({
     required this.id,
     required this.name,
     required this.cover,
@@ -15,7 +15,7 @@ class EBookModel {
   final String url;
   final int rating;
 
-  factory EBookModel.fromMap(Map<String, dynamic> json) => EBookModel(
+  factory SearchEbookModel.fromMap(Map<String, dynamic> json) => SearchEbookModel(
         id: json["book_id"],
         name: json["name"],
         cover: json["cover"],
