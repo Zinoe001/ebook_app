@@ -1,0 +1,27 @@
+class ExploreModel {
+  ExploreModel({
+    required this.id,
+    required this.name,
+    required this.cover,
+    required this.url,
+  });
+
+  final String id;
+  final String name;
+  final String cover;
+  final String url;
+
+  factory ExploreModel.fromMap(Map<String, dynamic> json) => ExploreModel(
+        id: json["book_id"],
+        name: json["name"],
+        cover: json["cover"],
+        url: json["url"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "book_id": id,
+        "name": name,
+        "cover": cover,
+        "url": url,
+      };
+}

@@ -13,24 +13,24 @@ class EBookModel {
     required this.synopsis,
   });
 
-  final int id;
+  final String id;
   final String name;
   final String cover;
-  final String author;
+  final List<dynamic> author;
   final String url;
-  final int rating;
+  final String rating;
   final String published;
-  final int pages;
+  final String pages;
   final String synopsis;
 
   factory EBookModel.fromMap(Map<String, dynamic> json) => EBookModel(
-        id: json["book_id"],
+        id: json["book_id"].toString(),
         name: json["name"],
         cover: json["cover"],
         author: json["authors"],
         url: json["url"],
-        rating: json["rating"],
-        pages: json["pages"],
+        rating: json["rating"].toString(),
+        pages: json["pages"].toString(),
         published: json["published_date"],
         synopsis: json["synopsis"],
       );
