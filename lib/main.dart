@@ -1,5 +1,6 @@
 import 'package:ebook_app/core/utils/colors.dart';
 import 'package:ebook_app/views/body/body.dart';
+import 'package:ebook_app/views/splash/splash_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: kPrimaryColor,
       ),
-      home: Body(),
+      home: const SplashView(),
     );
   }
 }

@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 class EbookServices {
   var randomNum = Random();
-  late int rng = randomNum.nextInt(monthNum.length);
+  late int index = randomNum.nextInt(monthNum.length);
   List<int> monthNum = [1, 2, 3, 4, 5, 6];
   Future<EBookModel> getEbookDetails({required int id}) async {
     try {
@@ -17,7 +17,7 @@ class EbookServices {
           headers: {
             'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com',
             'X-RapidAPI-Key':
-                '6681adda24msh39df180d08090b6p1a20f9jsn52d8e6787764'
+                '1315e2adb7msh1e9da8b53fb94d9p17130bjsna8e97cd5cc2d'
           });
       final data = jsonDecode(response.body);
       return EBookModel.fromMap(data);
@@ -34,7 +34,7 @@ class EbookServices {
           headers: {
             'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com',
             'X-RapidAPI-Key':
-                '6681adda24msh39df180d08090b6p1a20f9jsn52d8e6787764'
+                '1315e2adb7msh1e9da8b53fb94d9p17130bjsna8e97cd5cc2d'
           });
       final data = jsonDecode(response.body);
       List<GenreModel> ebookList =
@@ -49,11 +49,11 @@ class EbookServices {
   Future<List<ExploreModel>> getRandomEbooks() async {
     try {
       http.Response response = await http.get(
-          Uri.parse("https://hapi-books.p.rapidapi.com/month/2022/$rng"),
+          Uri.parse("https://hapi-books.p.rapidapi.com/month/2022/$index"),
           headers: {
             'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com',
             'X-RapidAPI-Key':
-                '6681adda24msh39df180d08090b6p1a20f9jsn52d8e6787764'
+                '1315e2adb7msh1e9da8b53fb94d9p17130bjsna8e97cd5cc2d'
           });
       final result = jsonDecode(response.body);
       List<ExploreModel> randomList =
@@ -73,7 +73,7 @@ class EbookServices {
           headers: {
             'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com',
             'X-RapidAPI-Key':
-                '6681adda24msh39df180d08090b6p1a20f9jsn52d8e6787764'
+                '1315e2adb7msh1e9da8b53fb94d9p17130bjsna8e97cd5cc2d'
           });
       final data = jsonDecode(response.body);
       List<SearchEbookModel> seearchedEbook =

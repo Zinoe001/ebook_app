@@ -8,6 +8,7 @@ import 'package:ebook_app/widgets/curve_line_paint.dart';
 import 'package:ebook_app/widgets/my_list.dart';
 import 'package:ebook_app/widgets/web_view.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class EbookView extends StatefulWidget {
   const EbookView(
@@ -44,7 +45,15 @@ class _EbookViewState extends State<EbookView> {
     return Scaffold(
       backgroundColor: const Color(0XFF1A2232),
       body: _function.ebook.isEmpty
-          ? const Center(child: CircularProgressIndicator())
+          ? Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Lottie.network(
+                    "https://assets8.lottiefiles.com/packages/lf20_szrbrL.json",
+                    frameRate: FrameRate.max,),
+              ],
+            )
           : ListView(
               padding: const EdgeInsets.all(0),
               children: [
@@ -81,10 +90,19 @@ class _EbookViewState extends State<EbookView> {
                           ],
                         ),
                       ),
-                      Positioned(
-                        top: 100,
-                        left: 120,
-                        right: 120,
+                      TweenAnimationBuilder(
+                        builder: (BuildContext context, double value,
+                            Widget? child) {
+                          return Opacity(
+                              opacity: value,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: value * 100, left: 125, right: 125),
+                                child: child,
+                              ));
+                        },
+                        tween: Tween<double>(begin: 0, end: 1),
+                        duration: const Duration(seconds: 2),
                         child: Container(
                           clipBehavior: Clip.hardEdge,
                           height: 175,
@@ -189,9 +207,10 @@ class _EbookViewState extends State<EbookView> {
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                   child: InkWell(
                     onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => WebViewApp(url: _function.ebook[0].url))),
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                WebViewApp(url: _function.ebook[0].url))),
                     child: Container(
                       height: 45,
                       width: double.infinity,

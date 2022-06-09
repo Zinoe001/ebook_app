@@ -6,9 +6,9 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class Body extends StatelessWidget {
   Body({
-    Key? key, 
+    Key? key,
   }) : super(key: key);
-  
+
   List<Widget> _buildScreens() {
     return [
       const HomeView(),
