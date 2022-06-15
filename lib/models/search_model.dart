@@ -8,20 +8,20 @@ class SearchEbookModel {
     required this.rating,
   });
 
-  final int id;
+  final String id;
   final String name;
   final String cover;
-  final String author;
+  final List<dynamic> author;
   final String url;
-  final int rating;
+  final String rating;
 
   factory SearchEbookModel.fromMap(Map<String, dynamic> json) => SearchEbookModel(
-        id: json["book_id"],
+        id: json["book_id"].toString(),
         name: json["name"],
         cover: json["cover"],
         author: json["authors"],
         url: json["url"],
-        rating: json["rating"],
+        rating: json["rating"].toString(),
       );
 
   Map<String, dynamic> toMap() => {

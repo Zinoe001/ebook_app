@@ -18,7 +18,7 @@ class _SplashViewState extends State<SplashView>
   late Animation<double> _displayAnimation;
   late Animation _curve;
   late final Animation<Offset> _offsetAnimation = Tween<Offset>(
-    begin: const Offset(-1, 0),
+    begin: const Offset(1, 0),
     end: const Offset(0, 0),
   ).animate(CurvedAnimation(
     parent: _controller,
@@ -27,9 +27,9 @@ class _SplashViewState extends State<SplashView>
   @override
   void initState() {
     _controller =
-        AnimationController(duration: const Duration(seconds: 2), vsync: this);
+        AnimationController(duration: const Duration(seconds: 3), vsync: this);
     super.initState();
-    _curve = CurvedAnimation(parent: _controller, curve: Curves.fastOutSlowIn);
+    _curve = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
     _sizeAnimation = TweenSequence(<TweenSequenceItem<double>>[
       TweenSequenceItem(tween: Tween<double>(begin: 0, end: 500), weight: 500),
     ]).animate(_curve as Animation<double>);
@@ -76,7 +76,7 @@ class _SplashViewState extends State<SplashView>
                         animation: _controller,
                         builder: (BuildContext context, _) {
                           return Lottie.asset(
-                            "assets/splash.json",
+                            "assets/lottieFiles/splash.json",
                             height: _sizeAnimation.value,
                           );
                         },
@@ -85,45 +85,50 @@ class _SplashViewState extends State<SplashView>
                   ),
                 );
               }),
+          const SizedBox(height: 18),
+          FadeTransition(
+            opacity: _controller,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                children: [
+                  AppText.heading2SB(
+                    "Reading in any way Convienient",
+                    centered: true,
+                    color: kSecondaryColor,
+                    multitext: true,
+                  ),
+                  const SizedBox(height: 8),
+                  AppText.heading6M(
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                    centered: true,
+                    color: kSecondaryColor,
+                    multitext: true,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 18),
           SlideTransition(
             position: _offsetAnimation,
             child: FadeTransition(
               opacity: _controller,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Column(
-                  children: [
-                    AppText.heading2SB(
-                      "Reading in any way Convienient",
-                      centered: true,
+              child: Center(
+                child: InkWell(
+                  onTap: () => Navigator.pushReplacement(
+                      context, MaterialPageRoute(builder: (context) => Body())),
+                  child: Container(
+                    height: 45,
+                    width: 45,
+                    decoration: BoxDecoration(
                       color: kSecondaryColor,
-                      multitext: true,
+                      borderRadius: BorderRadius.circular(15),
                     ),
-                    const SizedBox(height: 8),
-                    AppText.heading6M(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                      centered: true,
-                      color: kSecondaryColor,
-                      multitext: true,
-                    ),
-                    const SizedBox(height: 18),
-                    InkWell(
-                      onTap: () => Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => Body())),
-                      child: Container(
-                        height: 45,
-                        width: 45,
-                        decoration: BoxDecoration(
-                          color: kSecondaryColor,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: const Center(
-                            child: Icon(Icons.arrow_forward_outlined,
-                                color: Colors.white)),
-                      ),
-                    )
-                  ],
+                    child: const Center(
+                        child: Icon(Icons.arrow_forward_outlined,
+                            color: Colors.white)),
+                  ),
                 ),
               ),
             ),

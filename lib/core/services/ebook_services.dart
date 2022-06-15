@@ -17,7 +17,7 @@ class EbookServices {
           headers: {
             'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com',
             'X-RapidAPI-Key':
-                '1315e2adb7msh1e9da8b53fb94d9p17130bjsna8e97cd5cc2d'
+                'e52790d41emsh87fe76bfd5d6cc7p107285jsnde884c58d376'
           });
       final data = jsonDecode(response.body);
       return EBookModel.fromMap(data);
@@ -34,7 +34,7 @@ class EbookServices {
           headers: {
             'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com',
             'X-RapidAPI-Key':
-                '1315e2adb7msh1e9da8b53fb94d9p17130bjsna8e97cd5cc2d'
+                'e52790d41emsh87fe76bfd5d6cc7p107285jsnde884c58d376'
           });
       final data = jsonDecode(response.body);
       List<GenreModel> ebookList =
@@ -53,7 +53,7 @@ class EbookServices {
           headers: {
             'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com',
             'X-RapidAPI-Key':
-                '1315e2adb7msh1e9da8b53fb94d9p17130bjsna8e97cd5cc2d'
+                'e52790d41emsh87fe76bfd5d6cc7p107285jsnde884c58d376'
           });
       final result = jsonDecode(response.body);
       List<ExploreModel> randomList =
@@ -73,11 +73,11 @@ class EbookServices {
           headers: {
             'X-RapidAPI-Host': 'hapi-books.p.rapidapi.com',
             'X-RapidAPI-Key':
-                '1315e2adb7msh1e9da8b53fb94d9p17130bjsna8e97cd5cc2d'
+                'e52790d41emsh87fe76bfd5d6cc7p107285jsnde884c58d376'
           });
       final data = jsonDecode(response.body);
-      List<SearchEbookModel> seearchedEbook =
-          data.map((item) => SearchEbookModel.fromMap(item)).tolist();
+      List<SearchEbookModel> seearchedEbook = List<SearchEbookModel>.from(
+          data.map((e) => SearchEbookModel.fromMap(e)));
       return seearchedEbook;
     } catch (e) {
       print(e);

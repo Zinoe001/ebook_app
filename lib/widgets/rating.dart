@@ -6,10 +6,11 @@ class StarRating extends StatelessWidget {
   const StarRating({
     Key? key,
     required this.length,
-    required this.halfLength,
+    required this.halfLength, required this.size,
   }) : super(key: key);
   final int length;
   final int halfLength;
+  final double size;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -22,7 +23,7 @@ class StarRating extends StatelessWidget {
             (index) => Icon(
               EBookIcon.star,
               color: kPrimaryColor,
-              size: 25,
+              size: size,
             ),
           ),
           ...List.generate(
@@ -30,7 +31,7 @@ class StarRating extends StatelessWidget {
             (index) => Icon(
               EBookIcon.star_half,
               color: kPrimaryColor,
-              size: 25,
+              size: size,
             ),
           ),
           ...List.generate(
@@ -38,7 +39,7 @@ class StarRating extends StatelessWidget {
             (index) => Icon(
               EBookIcon.star_outlined,
               color: kPrimaryColor,
-              size: 25,
+              size: size,
             ),
           ),
         ]);

@@ -20,8 +20,8 @@ class _EbookShowCaseState extends State<EbookShowCase> {
   @override
   void initState() {
     Future.delayed(
-        const Duration(seconds: 8), () => getGenre(query: "romance"));
-      
+        const Duration(seconds: 4), () => getGenre(query: "romance"));
+
     super.initState();
   }
 
@@ -66,30 +66,42 @@ class _EbookShowCaseState extends State<EbookShowCase> {
           ),
         ),
         const SizedBox(height: 5),
-        SliverGrid.count(
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
-          childAspectRatio: 0.6,
-          crossAxisCount: 3,
-          children: [
-            ...List.generate(
-                _function.genreList.length,
-                (index) => GestureDetector(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => EbookView(
-                                    id: _function.genreList[index].id,
-                                    cover: _function.genreList[index].cover,
-                                    title: _function.genreList[index].name,
-                                  ))),
-                      child: GridEbookCard(
-                        title: _function.genreList[index].name,
-                        cover: _function.genreList[index].cover,
-                      ),
-                    ))
-          ],
-        )
+        _function.genreList.isEmpty
+            ? SliverGrid.count(
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
+                childAspectRatio: 0.6,
+                crossAxisCount: 3,
+                children: [
+                  ...List.generate(6, (index) => const GridEbookCardSkelenton())
+                ],
+              )
+            : SliverGrid.count(
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
+                childAspectRatio: 0.6,
+                crossAxisCount: 3,
+                children: [
+                  ...List.generate(
+                      _function.genreList.length,
+                      (index) => GestureDetector(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EbookView(
+                                          id: _function.genreList[index].id,
+                                          cover:
+                                              _function.genreList[index].cover,
+                                          title:
+                                              _function.genreList[index].name,
+                                        ))),
+                            child: GridEbookCard(
+                              title: _function.genreList[index].name,
+                              cover: _function.genreList[index].cover,
+                            ),
+                          ))
+                ],
+              )
       ],
     );
   }

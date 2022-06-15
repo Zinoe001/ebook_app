@@ -32,3 +32,7 @@ Map<int,Color> _secondaryColor = {
 };
 
 final MaterialColor kSecondaryColor = MaterialColor(0XFF070D30, _secondaryColor);
+
+Color kSkelenton = Colors.black.withOpacity(0.4);
+
+Color kBGColor = const Color(0XFF1A2232);

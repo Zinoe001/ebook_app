@@ -2,6 +2,7 @@ import 'package:ebook_app/core/utils/colors.dart';
 import 'package:ebook_app/core/utils/custom_icons.dart';
 import 'package:ebook_app/core/utils/text.dart';
 import 'package:ebook_app/views/home/components/ebook_show_case.dart';
+import 'package:ebook_app/views/search/search_view.dart';
 import 'package:ebook_app/widgets/carousel_slider.dart';
 import 'package:ebook_app/widgets/persistent_header.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0XFF1A2232),
+      backgroundColor: kBGColor,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
@@ -32,7 +33,10 @@ class _HomeViewState extends State<HomeView> {
                     ),
                     const Spacer(),
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SearchView())),
                         icon: const Icon(
                           EBookIcon.search,
                           color: Colors.white,

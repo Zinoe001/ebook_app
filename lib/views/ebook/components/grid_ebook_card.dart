@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ebook_app/widgets/skeleton.dart';
 import 'package:flutter/material.dart';
 
 class GridEbookCard extends StatelessWidget {
@@ -17,6 +18,18 @@ class GridEbookCard extends StatelessWidget {
         imageUrl: cover,
         fit: BoxFit.cover,
       ),
+    );
+  }
+}
+
+class GridEbookCardSkelenton extends StatelessWidget {
+  const GridEbookCardSkelenton({
+    Key? key,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return const Skeleton(
+      height: 125,
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:ebook_app/core/utils/custom_icons.dart';
 import 'package:ebook_app/core/utils/functions.dart';
 import 'package:ebook_app/core/utils/text.dart';
 import 'package:ebook_app/widgets/curve_line_paint.dart';
+import 'package:ebook_app/widgets/ebook_snackbar.dart';
 import 'package:ebook_app/widgets/my_list.dart';
 import 'package:ebook_app/widgets/web_view.dart';
 import 'package:flutter/material.dart';
@@ -21,16 +22,21 @@ class EbookView extends StatefulWidget {
   State<EbookView> createState() => _EbookViewState();
 }
 
-class _EbookViewState extends State<EbookView> {
+class _EbookViewState extends State<EbookView>
+    with SingleTickerProviderStateMixin {
   var randomNum = Random();
   late int hexCode = randomNum.nextInt(_list.colorCode.length);
   final MyList _list = MyList();
   static final EbookFunctions _function = EbookFunctions();
-
+  static final EbookFlushbar _flushbar = EbookFlushbar();
+  late AnimationController _controller;
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 2), () => getEbook(id: widget.id));
+    _controller =
+        AnimationController(duration: const Duration(seconds: 5), vsync: this);
     super.initState();
+    _controller.forward();
   }
 
   getEbook({required int id}) async {
@@ -41,17 +47,27 @@ class _EbookViewState extends State<EbookView> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  bool onSave = false;
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0XFF1A2232),
+      backgroundColor: kBGColor,
       body: _function.ebook.isEmpty
           ? Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Lottie.network(
-                    "https://assets8.lottiefiles.com/packages/lf20_szrbrL.json",
-                    frameRate: FrameRate.max,),
+                FadeTransition(
+                  opacity: _controller,
+                  child: Lottie.asset(
+                    "assets/lottieFiles/loading.json",
+                  ),
+                )
               ],
             )
           : ListView(
@@ -80,11 +96,67 @@ class _EbookViewState extends State<EbookView> {
                               ),
                             ),
                             const Spacer(),
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                EBookIcon.bookmark_outline,
-                                color: Colors.white,
+                            Container(
+                              height: 45,
+                              width: 45,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: kSecondaryColor,
+                              ),
+                              child: Center(
+                                child: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      onSave = !onSave;
+                                    });
+                                    if (onSave) {
+                                      print("saved");
+                                      EbookFunctions.addBookmarkList({
+                                        "id": _function.ebook[0].id,
+                                        "name": _function.ebook[0].name,
+                                        "url": _function.ebook[0].url,
+                                        "author": _function.ebook[0].author,
+                                        "cover": _function.ebook[0].cover,
+                                        "pages": _function.ebook[0].pages,
+                                        "rating": _function.ebook[0].rating,
+                                        "published":
+                                            _function.ebook[0].published,
+                                        "synopsis": _function.ebook[0].synopsis,
+                                      });
+                                      _flushbar.showSuccessful(context,
+                                          title: "Added to Bookmark",
+                                          message:
+                                              "you have successfully added ${_function.ebook[0].name} to your book mark");
+                                    } else {
+                                      print("removed");
+                                      EbookFunctions.removeBookmarkList({
+                                        "id": _function.ebook[0].id,
+                                        "name": _function.ebook[0].name,
+                                        "url": _function.ebook[0].url,
+                                        "author": _function.ebook[0].author,
+                                        "cover": _function.ebook[0].cover,
+                                        "pages": _function.ebook[0].pages,
+                                        "rating": _function.ebook[0].rating,
+                                        "published":
+                                            _function.ebook[0].published,
+                                        "synopsis": _function.ebook[0].synopsis,
+                                      });
+                                      _flushbar.showError(context,
+                                          title: "Removed from Bookmark",
+                                          message:
+                                              "you have removed ${_function.ebook[0].name} from your book mark");
+                                    }
+                                  },
+                                  icon: onSave
+                                      ? Icon(
+                                          EBookIcon.bookmark,
+                                          color: kPrimaryColor,
+                                        )
+                                      : Icon(
+                                          EBookIcon.bookmark_outline,
+                                          color: kPrimaryColor,
+                                        ),
+                                ),
                               ),
                             ),
                           ],
@@ -147,6 +219,7 @@ class _EbookViewState extends State<EbookView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           _function.getStarRating(
+                              size: 25,
                               rating: double.parse(_function.ebook[0].rating)),
                           const SizedBox(height: 4),
                           AppText.captionSB(
